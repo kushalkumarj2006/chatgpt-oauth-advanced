@@ -41,7 +41,7 @@
       background: var(--color-bg-page);
       color: var(--color-text-primary);
       min-height: 100vh;
-      min-height: 100dvh; /* Dynamic viewport height for mobile */
+      min-height: 100dvh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -254,7 +254,7 @@
       border: 1px solid var(--color-border-strong);
       border-radius: var(--radius-lg);
       color: var(--color-text-primary);
-      font-size: 16px; /* Prevents zoom on iOS */
+      font-size: 16px;
       font-family: inherit;
       transition: border-color 0.18s, box-shadow 0.18s;
     }
@@ -432,7 +432,7 @@
       min-height: 28px;
       max-height: 160px;
       border-radius: 0;
-      font-size: 16px; /* Prevents zoom on iOS */
+      font-size: 16px;
       line-height: 1.5;
       color: var(--color-text-primary);
       resize: none;
@@ -516,10 +516,9 @@
       text-align: center;
       margin-top: 8px;
       letter-spacing: 0.01em;
-      display: none; /* Hidden on mobile to save space, visible on larger screens */
+      display: none;
     }
 
-    /* Responsive Breakpoints */
     @media (min-width: 640px) {
       .info { display: block; }
       .header { padding: 16px 24px; }
@@ -636,7 +635,6 @@
                 </span>
               </label>
 
-              <!-- Hidden Code Interpreter Toggle (preserved for JS) -->
               <label class="code-interpreter-toggle">
                 <input type="checkbox" id="codeInterpreterToggle">
               </label>
@@ -664,12 +662,10 @@
     const REDIRECT_URI = 'http://localhost:1455/auth/callback';
     const SCOPE = 'openid profile email offline_access';
 
-    // CHANGE THIS TO YOUR CLOUDFLARE WORKER URL
-    const PROXY = 'https://cors-anywhere.herokuapp.com/'; 
+    const PROXY = 'https://cors-proxy.kushalkumarj01.workers.dev/'; 
     const TOKEN_URL = `${PROXY}https://auth.openai.com/oauth/token`;
     const CODEX_URL = `${PROXY}https://chatgpt.com/backend-api/codex/responses`;
 
-    // Configure Marked.js
     marked.setOptions({
       highlight: function(code, lang) {
         if (lang && hljs.getLanguage(lang)) {
