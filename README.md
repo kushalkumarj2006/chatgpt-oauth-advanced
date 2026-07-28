@@ -1,10 +1,10 @@
-# ChatGPT OAuth Advanced
+# ChatGPT OAuth – Advanced (Standalone)
 
-A polished, standalone web interface for ChatGPT using official OAuth PKCE authentication. It provides a seamless, ChatGPT-like UI experience and supports file attachments, vision processing, live web search, streaming markdown responses, and model switching.
+A polished, single‑page HTML interface for ChatGPT that uses official OAuth PKCE authentication. It provides a ChatGPT‑like experience with file attachments, vision, live web search, and streaming markdown responses – all using **only** the `gpt-5.6-terra` model.
 
 **Repository:** [https://github.com/kushalkumarj2006/chatgpt-oauth-advanced/](https://github.com/kushalkumarj2006/chatgpt-oauth-advanced/)
 
-![Features](https://img.shields.io/badge/Features-OAuth%20%7C%20Vision%20%7C%20Files%20%7C%20Web%20Search-blue)
+![Features](https://img.shields.io/badge/Features-OAuth%20%7C%20Vision%20%7C%20Files%20%7C%20Web%20Search-blue)  
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
@@ -12,12 +12,12 @@ A polished, standalone web interface for ChatGPT using official OAuth PKCE authe
 ## ✨ Key Features
 
 - **Official OAuth Flow** – Securely log in using your ChatGPT account via PKCE (no API keys required).
-- **Model Switching** – Dynamic dropdown to switch between `gpt-5.6-terra`, `gpt-4o`, and `gpt-4o-mini` on the fly.
+- **Fixed Model** – Uses `gpt-5.6-terra`, the most advanced model available.
 - **Multi‑Modal Support** – Upload images (Vision), PDFs, code files, and text documents directly in the chat.
 - **Agentic Tools** – Toggleable **Web Search** tool to let the AI fetch real‑time information.
 - **Streaming Markdown** – Real‑time rendering of markdown responses with syntax highlighting and one‑click code copying.
 - **Mobile Responsive** – Designed with a mobile‑first approach, including dynamic viewport heights and iOS‑safe input handling.
-- **Self‑Hosted CORS Proxy** – Includes a Node.js Express server (ready for Render) so you don't have to rely on rate‑limited public CORS proxies.
+- **Self‑Hosted CORS Proxy** – Includes a Node.js Express server (ready for Render) to bypass browser CORS restrictions.
 
 ---
 
@@ -25,8 +25,8 @@ A polished, standalone web interface for ChatGPT using official OAuth PKCE authe
 
 The application consists of three main components:
 
-- **Frontend** – Single‑page HTML/CSS/JS client that handles the user interface, PKCE OAuth flow, and chat interaction.
-- **CORS Proxy** – A lightweight Node.js/Express server that forwards requests to OpenAI’s OAuth and Codex endpoints, adding necessary CORS headers and spoofing origin/user‑agent to bypass restrictions.
+- **Frontend** – Single‑page HTML/CSS/JS client that handles the UI, PKCE OAuth flow, and chat interaction.
+- **CORS Proxy** – A lightweight Node.js/Express server that forwards requests to OpenAI’s OAuth and Codex endpoints, adding necessary CORS headers and spoofing origin/user‑agent.
 - **External Services** – OpenAI’s OAuth server (`auth.openai.com`) and the ChatGPT Codex API (`chatgpt.com/backend-api/codex/responses`).
 
 The frontend communicates exclusively through the proxy, which acts as a bridge between the browser and OpenAI.
