@@ -105,13 +105,16 @@
     
     .title-block h1 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
     
-    .model-dropdown {
-      background: transparent; color: var(--color-text-primary); border: none;
-      font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit;
-      padding: 0 2px 0 0; outline: none; -webkit-appearance: none; appearance: none;
+    .model-badge {
+      background: var(--color-bg-hover);
+      border: 1px solid var(--color-border-default);
+      border-radius: 100px;
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
     }
-    .model-select-wrapper { position: relative; display: inline-flex; align-items: center; }
-    .model-select-wrapper svg { width: 12px; height: 12px; color: var(--color-text-secondary); pointer-events: none; }
     
     .sub { color: var(--color-text-secondary); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -330,16 +333,7 @@
         <div class="title-block">
           <div class="title-row">
             <h1>ChatGPT</h1>
-            <div class="model-select-wrapper">
-              <select id="modelSelect" class="model-dropdown">
-                <option value="gpt-5.6-terra" selected>gpt-5.6-terra</option>
-                <option value="gpt-4o">gpt-4o</option>
-                <option value="gpt-4o-mini">gpt-4o-mini</option>
-              </select>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </div>
+            <span class="model-badge">gpt-5.6-terra</span>
           </div>
           <div class="sub">OAuth · Files · Vision · Web Search</div>
         </div>
@@ -362,7 +356,7 @@
 
         <div class="btn-stack">
           <button class="btn btn-img" id="loginBtn">
-            <img src="./sign-in-with-chatgpt-button.webp" alt="Sign in with ChatGPT">
+            <img src="https://raw.githubusercontent.com/kushalkumarj2006/chatgpt-oauth-advanced/refs/heads/main/sign-in-with-chatgpt-button.webp" alt="Sign in with ChatGPT">
           </button>
           <button class="btn btn-secondary" id="copyUrlBtn" disabled>📋 Copy URL</button>
         </div>
@@ -500,7 +494,6 @@
     const messages = document.getElementById('messages');
     const promptInput = document.getElementById('promptInput');
     const sendBtn = document.getElementById('sendBtn');
-    const modelSelect = document.getElementById('modelSelect');
     
     const fileInput = document.getElementById('fileInput');
     const filePreview = document.getElementById('filePreview');
@@ -714,7 +707,7 @@
         instructions += " You have access to a code interpreter tool. Use it to execute Python code when needed to answer questions or process files.";
       }
 
-      const selectedModel = modelSelect.value || 'gpt-5.6-terra';
+      const selectedModel = 'gpt-5.6-terra';
 
       const payload = {
         model: selectedModel,
