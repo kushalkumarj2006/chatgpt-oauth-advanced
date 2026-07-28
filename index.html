@@ -39,7 +39,7 @@
 
     html, body {
       height: 100%;
-      overflow: hidden; /* Prevent body scroll */
+      overflow: hidden;
     }
 
     body {
@@ -56,8 +56,8 @@
 
     .app {
       width: 100%;
-      height: 100vh; /* Fallback */
-      height: 100dvh; /* Dynamic viewport height */
+      height: 100vh;
+      height: 100dvh;
       background: var(--color-bg-page);
       display: flex;
       flex-direction: column;
@@ -65,7 +65,6 @@
       position: relative;
     }
 
-    /* Desktop constraints */
     @media (min-width: 768px) {
       body {
         padding: 20px;
@@ -81,7 +80,6 @@
       }
     }
 
-    /* ===== Header ===== */
     .header {
       padding: calc(var(--safe-top) + 12px) 20px 12px;
       border-bottom: 1px solid var(--color-border-default);
@@ -134,7 +132,6 @@
     
     #status { font-size: 12px; color: var(--color-text-secondary); margin: 0; padding: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
 
-    /* ===== Login Section ===== */
     .login-section {
       padding: 20px;
       background: var(--color-bg-page);
@@ -178,7 +175,7 @@
 
     input[type="text"], textarea {
       width: 100%; padding: 12px 16px; background: #ffffff; border: 1px solid var(--color-border-strong);
-      border-radius: var(--radius-lg); color: var(--color-text-primary); font-size: 16px; /* Prevents zoom on iOS */
+      border-radius: var(--radius-lg); color: var(--color-text-primary); font-size: 16px;
       font-family: inherit; transition: border-color 0.18s, box-shadow 0.18s;
     }
     input[type="text"]:focus, textarea:focus {
@@ -195,7 +192,6 @@
     .btn-danger { background: #ef4444; color: white; width: auto; }
     .btn-danger:hover { background: #dc2626; }
 
-    /* ===== Chat Section ===== */
     .chat-box {
       display: flex; flex-direction: column; flex: 1; min-height: 0;
       background: var(--color-bg-page);
@@ -252,7 +248,6 @@
     .msg.assistant pre:hover .copy-btn { opacity: 1; }
     .copy-btn:hover { background: rgba(255, 255, 255, 0.2); }
 
-    /* ===== Chat Input Area ===== */
     .input-area {
       padding: 8px 12px calc(var(--safe-bottom) + 12px);
       background: var(--color-bg-page);
@@ -367,7 +362,7 @@
 
         <div class="btn-stack">
           <button class="btn btn-img" id="loginBtn">
-            <img src="https://raw.githubusercontent.com/kushalkumarj2006/chatgpt-oauth-advanced/refs/heads/main/sign-in-with-chatgpt-button.webp" alt="Sign in with ChatGPT">
+            <img src="/sign-in-with-chatgpt-button.webp" alt="Sign in with ChatGPT">
           </button>
           <button class="btn btn-secondary" id="copyUrlBtn" disabled>📋 Copy URL</button>
         </div>
@@ -441,20 +436,15 @@
   </div>
 
   <script>
-    // ------------------------------------------------------------
-    // Configuration
-    // ------------------------------------------------------------
     const CLIENT_ID = 'app_EMoamEEZ73f0CkXaXp7hrann';
     const ISSUER = 'https://auth.openai.com';
     const REDIRECT_URI = 'http://localhost:1455/auth/callback';
     const SCOPE = 'openid profile email offline_access';
 
-    // Your personal, always-active CORS proxy
     const PROXY = 'https://chatgpt-oauth-advanced.onrender.com/';
     const TOKEN_URL = `${PROXY}https://auth.openai.com/oauth/token`;
     const CODEX_URL = `${PROXY}https://chatgpt.com/backend-api/codex/responses`;
 
-    // Configure Marked.js
     marked.setOptions({
       highlight: function(code, lang) {
         if (lang && hljs.getLanguage(lang)) {
@@ -464,9 +454,6 @@
       }
     });
 
-    // ------------------------------------------------------------
-    // PKCE helpers
-    // ------------------------------------------------------------
     function b64UrlEncode(data) {
       return btoa(String.fromCharCode(...new Uint8Array(data)))
         .replace(/\+/g, '-')
@@ -491,9 +478,6 @@
       return b64UrlEncode(digest);
     }
 
-    // ------------------------------------------------------------
-    // State
-    // ------------------------------------------------------------
     let codeVerifier = localStorage.getItem('openai-oauth:codeVerifier') || '';
     let state = localStorage.getItem('openai-oauth:state') || '';
     let accessToken = localStorage.getItem('openai-oauth:access') || '';
@@ -503,7 +487,6 @@
     let currentAttachments = [];
     let conversationHistory = [];
 
-    // DOM refs
     const loginBtn = document.getElementById('loginBtn');
     const copyUrlBtn = document.getElementById('copyUrlBtn');
     const enableCorsBtn = document.getElementById('enableCorsBtn');
@@ -524,9 +507,6 @@
     const webSearchToggle = document.getElementById('webSearchToggle');
     const codeInterpreterToggle = document.getElementById('codeInterpreterToggle');
 
-    // ------------------------------------------------------------
-    // Auth URL
-    // ------------------------------------------------------------
     async function generateAuthUrl() {
       state = b64UrlEncode(randomBytes(24));
       codeVerifier = await generateCodeVerifier();
@@ -557,9 +537,6 @@
       return url;
     }
 
-    // ------------------------------------------------------------
-    // Token Exchange & Refresh
-    // ------------------------------------------------------------
     async function exchangeCode(code, verifier) {
       const body = new URLSearchParams({
         grant_type: 'authorization_code',
@@ -622,9 +599,6 @@
       accessToken = ''; refreshToken = ''; accountId = '';
     }
 
-    // ------------------------------------------------------------
-    // UI
-    // ------------------------------------------------------------
     function setStatus(msg, isError = false) {
       status.textContent = msg;
       status.style.color = isError ? '#ef4444' : 'var(--color-text-secondary)';
@@ -678,9 +652,6 @@
       return div;
     }
 
-    // ------------------------------------------------------------
-    // File Handling
-    // ------------------------------------------------------------
     fileInput.addEventListener('change', (e) => {
       const files = Array.from(e.target.files);
       files.forEach(file => {
@@ -709,9 +680,6 @@
       filePreview.classList.remove('hidden');
     }
 
-    // ------------------------------------------------------------
-    // Send Chat Request & Agentic Tool Loop
-    // ------------------------------------------------------------
     async function sendChat(prompt) {
       if (!accessToken) {
         setStatus('Not logged in', true);
@@ -887,9 +855,6 @@
       return { toolCall: null };
     }
 
-    // ------------------------------------------------------------
-    // Event Listeners
-    // ------------------------------------------------------------
     loginBtn.addEventListener('click', async () => {
       const url = await refreshUrl();
       window.open(url, '_blank');
@@ -940,7 +905,7 @@
       const prompt = promptInput.value.trim();
       if (!prompt && currentAttachments.length === 0) return;
       promptInput.value = '';
-      promptInput.style.height = 'auto'; // Reset height
+      promptInput.style.height = 'auto';
       await sendChat(prompt);
     });
 
@@ -951,15 +916,11 @@
       }
     });
 
-    // Auto-resize textarea
     promptInput.addEventListener('input', () => {
       promptInput.style.height = 'auto';
       promptInput.style.height = (promptInput.scrollHeight) + 'px';
     });
 
-    // ------------------------------------------------------------
-    // Init
-    // ------------------------------------------------------------
     (async function init() {
       const storedVerifier = localStorage.getItem('openai-oauth:codeVerifier');
       if (storedVerifier) codeVerifier = storedVerifier;
